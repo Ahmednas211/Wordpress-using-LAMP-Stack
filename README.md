@@ -164,6 +164,37 @@ Key Functions:
 <img src="https://i.imgur.com/bHfKtvZ.png" height="65%" width="75%" alt="RDP event fail logs to iP Geographic information"/>
 </p>
 
+8. Webserver (1 & 2), Target Group, and Load Balancer
+
+Now that we are sure that our set-up server is running, let's create two ec2 servers and position them in our private app subnet AZ 1 and private app subnet AZ 2 respectively. Then include the following user data scripts: 
+Steps
+    
+  1)	Create a webserver in private app subnet AZ 1 and use the user data. 
+    
+  2)	Then create another webserver in private app subnet AZ 2 and use the user data.
+Note: Ensure to update the mount target ID: fs-03c9b3354880b36a6.efs.us-east-1.amazonaws.com
+
+  ```
+  #!/bin/bash
+  yum update -y
+  sudo yum install -y httpd httpd-tools mod_ssl
+  sudo systemctl enable httpd 
+  sudo systemctl start httpd
+  sudo amazon-linux-extras enable php7.4
+  sudo yum clean metadata
+  sudo yum install php php-common php-pear -y
+  sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip} -y
+  sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+  sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+  sudo yum install mysql-community-server -y
+  sudo systemctl enable mysqld
+  sudo systemctl start mysqld
+  echo "fs-03c9b3354880b36a6.efs.us-east-1.amazonaws.com:/ /var/www/html nfs4 nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 0 0" >> /etc/fstab
+  mount -a
+  chown apache:apache -R /var/www/html
+  sudo service httpd restart
+  ```
+
 3. DNS and SSL/TLS Certificate Setup:
 
     - Route 53 Configuration: Create a hosted zone on Route 53 to manage the DNS records for your application. Configure DNS records like A and CNAME records as needed.
