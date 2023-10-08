@@ -198,11 +198,11 @@ Note: Ensure to update the mount target ID: fs-03c9b3354880b36a6.efs.us-east-1.a
 
 Target group
 
-  - Create a target group and include the respective Webservers. Please do not include the setup server.
+Create a target group and include the respective Webservers. Please do not include the setup server.
 
 Application Load Balancer: 
 
-  - ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets and target group of our webservers. Once the ALB is finished provisioning, do the following:
+ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets and target group of our webservers. Once the ALB is finished provisioning, do the following:
   
   •	Paste the DNS in a web browser (wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com)
     
@@ -215,66 +215,24 @@ Application Load Balancer:
   •	Then save and exit. 
 
 
-3. DNS and SSL/TLS Certificate Setup:
+9. ALB - Route 53
 
-    - Route 53 Configuration: Create a hosted zone on Route 53 to manage the DNS records for your application. Configure DNS records like A and CNAME records as needed.
+Obtain an SSL/TLS certificate using AWS Certificate Manager for your domain or subdomain to enable secure HTTPS traffic. Ensure the certificate is associated with the ALB.
+	
+  - CNAME: is the colloquial name of SSL certificate.
 
-    - SSL/TLS Certificate: Obtain an SSL/TLS certificate using AWS Certificate Manager for your domain or subdomain to enable secure HTTPS traffic. Ensure the certificate is associated with the ALB.
+  - www.nasvibez.com is referencing our ALB in eu-central-1 region.
+
   
-4. Application Load Balancer (ALB):
-
-    - ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets.
-
-    - Listeners: Set up ALB listeners for HTTP (port 80) and HTTPS (port 443) to forward traffic to backend EC2 instances. Configure appropriate SSL policies for HTTPS.
-  
-5. Launch Template Creation:
-
-    - Launch Template: Create a Launch Template specifying the required instance specifications for your EC2 instances. Include user data or user scripts for configuring instances upon launch.
-
-      ```
-      #!/bin/bash
-      sudo su
-      yum update -y
-      yum install -y httpd
-      cd /var/www/html
-      wget https://github.com/Ahmednas211/jupiter-zip-file/raw/main/jupiter-main.zip
-      unzip jupiter-main.zip
-      cp -r jupiter-main/* /var/www/html
-      rm -rf jupiter-main jupiter-main.zip
-      systemctl start httpd
-      systemctl enable httpd
-      
-      ```
-  
-6. Auto Scaling Group (ASG):
-
-    - ASG Configuration: Create an Auto Scaling Group (ASG) using the Launch Template. Configure scaling policies, instance count, and health checks.
-      
-    - Target Group: Set up a Target Group and configure it as the target for the ASG. This ensures that traffic is distributed correctly among instances.
-  
-7. ALB Listener Configuration:
-
-    - Listener Rules: Define rules in the ALB listener to route traffic based on hostnames, paths, or other criteria. Ensure that traffic is appropriately directed to backend instances.
-  
-8. DNS Configuration:
-
-    - Route 53 Updates: Update DNS records in Route 53 to point to the ALB's DNS name. Implement health checks in Route 53 to monitor the availability of your application.
-
-9. Testing and Monitoring:
-
-    - Testing: After DNS records have propagated, thoroughly test your application using the domain name (HTTPS) to verify the deployment's success.
-      
-    - Monitoring: Implement cloud monitoring and logging solutions (e.g., AWS CloudWatch) to monitor the health and performance of your infrastructure and applications.
-  
-10. Backup and Disaster Recovery:
+11. Backup and Disaster Recovery:
 
     - Implement backup and disaster recovery mechanisms to ensure data and application availability in case of failures.
    
-11. Security and Compliance:
+12. Security and Compliance:
 
     - Follow AWS security best practices, implement IAM roles and policies, and consider compliance requirements specific to your application.
    
-12. Documentation:
+13. Documentation:
 
     - Maintain detailed documentation of the deployment process, infrastructure architecture, and any changes made over time.
 
