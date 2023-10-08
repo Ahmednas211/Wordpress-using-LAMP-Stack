@@ -153,6 +153,12 @@ Key Functions:
     
   - Facilitates content sharing across EC2 instances in AZ 1 and AZ 2, mirroring the setup of Web Server 1 and Web Server 2. This design ensures high availability and scalability for our WordPress site.
 
+7. Configure WordPress site with your information
+
+  - Prior to the configuration of WordPress, use your ec2 public IP address to direct you to the WordPress site.
+
+  - Configure WordPress with private information and make sure you access the WordPress admin page. 
+
 
 3. DNS and SSL/TLS Certificate Setup:
 
