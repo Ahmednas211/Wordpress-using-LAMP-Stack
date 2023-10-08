@@ -227,28 +227,81 @@ ALB Setup: Configure the Application Load Balancer (ALB) and associate it with t
 </p>
 
 Once the above step is completed:
-	• Access WordPress and update the url paths to http://www.nasvibez.com
+	Access WordPress and update the url paths to http://www.nasvibez.com
 
-11. Backup and Disaster Recovery:
+10. Listeners
+
+Click this youtube channel for a guide if needed: [Here](https://www.youtube.com/watch?v=JQP96EjRM98&t=39s&ab_channel=CloudWithRaj)
+
+•	After ensuring that the http://www.nasvibez.com works, go to listeners, and do the following:
+•	Click Add listeners
+•	Select HTPPS on 443
+•	Forward to Targets groups
+•	Upload SSL/TLS certificate
+
+11. Launch Bastion Host Server 
+
+- We're setting up a Bastion Host server to facilitate secure access to our private subnets. Initially, it allows SSH traffic for administrative purposes. If issues arise when attempting to access private subnets, we can modify the Bastion Host's security group to permit traffic from our Application Load Balancer (ALB) and Web Server Security Groups (SGs).
+
+Purpose of the Bastion Host in Tandem to our Website
+	
+- The Bastion Host plays a critical role in our infrastructure. It serves as a secure jump server, allowing us to access and modify the wordpress wp-config.php file in our html directory. This will be executed in one of our webservers – particularly, private app subnet AZ 1.  Additionally, the rationale is that it enables us to enforce SSL encryption for the WordPress admin section. This step is crucial because without it, we risk downtime and our WordPress site may not properly recognize port 443 listeners for secure connections.
+
+Steps:
+	•	SSH into Bastion Host Server
+	
+	•	Pwd your current directory, this should show you /home/ec2-user otherwise cd into it.
+	
+	•	Copy your .pem file on the directory of /home/ec2-user
+	o	e.g., vi group2_ec2.pem 
+	•	chmod 400 group2_ec2.pem
+	•	Save and exit the vim editor ( esc, :wq!)
+	•	
+		sudo ssh -i “group2_ec2.pem” ec2-user@privateIPaddress_of_our_private_app_subnet_az1
+	 
+	•	cd /var/www/html
+	
+	•	vi wp-config.php
+
+Then add the following script after “@package Wordpress*/” line:
+
+	```
+	/* SSL Settings */
+	define('FORCE_SSL_ADMIN', true);
+	
+	// Get true SSL status from AWS load balancer
+	if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+	  $_SERVER['HTTPS'] = '1';
+	}
+
+ 	```
+Refresh your http://www.nasvibez.com
+
+Update your WordPress url paths and add (HTTPS) https://www.nasvibez.com
+
+If successful, go to appearances and install desired themes.
+
+
+12. Backup and Disaster Recovery:
 
     - Implement backup and disaster recovery mechanisms to ensure data and application availability in case of failures.
    
-12. Security and Compliance:
+13. Security and Compliance:
 
     - Follow AWS security best practices, implement IAM roles and policies, and consider compliance requirements specific to your application.
    
-13. Documentation:
+14. Documentation:
 
     - Maintain detailed documentation of the deployment process, infrastructure architecture, and any changes made over time.
 
 ## **A Screenshot of Landing Page Static Website**
 
 <p align="center">
-<img src="https://i.imgur.com/eUP7W7a.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
+<img src="https://i.imgur.com/MmchmkZ.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
 </p>
 
 <p align="center">
-<img src="https://i.imgur.com/ZHRd67Q.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
+<img src="https://i.imgur.com/gRJ5mev.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
 </p>
 
-**Congratulations! You've Successfuly Hosted a Static Jupiter Website :)**
+**Congratulations! You've Successfuly Hosted a Wordpress Website :)**
