@@ -139,6 +139,21 @@ In response to the operational challenges faced by our car rental business, we h
 
     ```
 
+7. Purpose of the Setup Server Above:
+
+The setup server serves as the core configuration hub for our AWS-hosted WordPress site. It orchestrates the installation of essential components like Apache, PHP, and MySQL for database operations. Moreover, it creates an Amazon EFS volume, enabling shared access to WordPress content among multiple EC2 instances in our chosen Availability Zones (AZ 1 and AZ 2).
+
+Key Functions:
+
+  - Installs and configures Apache, PHP, and MySQL for seamless WordPress operation.
+    
+  - Manages database connections and updates configurations in wp-config.php.
+    
+  - Establishes an Amazon EFS volume mounted on the HTML directory of web servers.
+    
+  - Facilitates content sharing across EC2 instances in AZ 1 and AZ 2, mirroring the setup of Web Server 1 and Web Server 2. This design ensures high availability and scalability for our WordPress site.
+
+
 3. DNS and SSL/TLS Certificate Setup:
 
     - Route 53 Configuration: Create a hosted zone on Route 53 to manage the DNS records for your application. Configure DNS records like A and CNAME records as needed.
