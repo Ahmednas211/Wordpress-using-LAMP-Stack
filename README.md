@@ -6,9 +6,9 @@ In response to the operational challenges faced by our car rental business, we h
 
 ## **Challenges and Objectives:**
 
-- Operational Excellence: Our primary challenge lies in ensuring the application's continuous availability, reducing downtime, and optimizing resource utilization. To achieve operational excellence, we need to enhance automation, monitoring, and incident response mechanisms.
+  - Operational Excellence: Our primary challenge lies in ensuring the application's continuous availability, reducing downtime, and optimizing resource utilization. To achieve operational excellence, we need to enhance automation, monitoring, and incident response mechanisms.
   
-- Security: As a critical aspect, security needs to be a top priority. We must bolster our application's security posture by implementing AWS Identity and Access Management (IAM) policies, encryption mechanisms, and threat detection systems.
+  - Security: As a critical aspect, security needs to be a top priority. We must bolster our application's security posture by implementing AWS Identity and Access Management (IAM) policies, encryption mechanisms, and threat detection systems.
   
 - Reliability: To address the reliability issues faced by our application, we should focus on reducing single points of failure, implementing backup and recovery strategies, and enhancing the overall system's fault tolerance.
   
