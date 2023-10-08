@@ -66,11 +66,11 @@ In response to the operational challenges faced by our car rental business, we h
 
     - Here, ensure to use the latest MYSQL engine, burstable database instance storage (check to include previous generation i.e., db.t2.micro), and pay attention to your database username and password. In subsequent configurations in ec2 server (wp-config.php): you will revert to your database configurations to get information like:
 
-- DB name: wordpress_Database_v1 DB 
+    - DB name: wordpress_Database_v1 DB 
 
-- instance ID: wordpress-db-1 
+    - instance ID: wordpress-db-1 
 
-- Endpoint: wordpress-db-1.clfp8kgim5mc.eu-central-1.rds.amazonaws.com
+    - Endpoint: wordpress-db-1.clfp8kgim5mc.eu-central-1.rds.amazonaws.com
 
 
 5. Create an EFS and Mount Target
@@ -89,6 +89,55 @@ In response to the operational challenges faced by our car rental business, we h
   
     - Once created, click attach and copy the mount target DNS info. This will used in our ec2 setup server.
 
+6. Create an EC2 setup server. Then ssh into the instance and include the following
+
+    ```
+    # 1. Mount EFS (Make sure EFS is properly configured)
+    sudo su
+    yum update -y
+    mkdir -p /var/www/html
+    sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0d845ea19fc5c7c9d.efs.eu-central-1.amazonaws.com:/ /var/www/html
+    
+    # 2. Install Apache
+    sudo yum install -y httpd httpd-tools mod_ssl
+    sudo systemctl enable httpd
+    sudo systemctl start httpd
+    
+    # 3. Install PHP 7.4
+    sudo amazon-linux-extras enable php7.4
+    sudo yum clean metadata
+    sudo yum install php php-common php-pear -y
+    sudo yum install php-{cgi,curl,mbstring,gd,mysqlnd,gettext,json,xml,fpm,intl,zip} -y
+    
+    # 4. Install MySQL (consider using a more recent version)
+    sudo rpm -Uvh https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
+    sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2022
+    sudo yum install mysql-community-server -y
+    sudo systemctl enable mysqld
+    sudo systemctl start mysqld
+    
+    # 5. Set permissions
+    sudo usermod -a -G apache ec2-user
+    sudo chown -R ec2-user:apache /var/www
+    sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} \;
+    sudo find /var/www -type f -exec sudo chmod 0664 {} \;
+    sudo chown apache:apache -R /var/www/html
+    
+    # 6. Download WordPress files
+    wget https://wordpress.org/latest.tar.gz
+    tar -xzf latest.tar.gz
+    cp -r wordpress/* /var/www/html/
+    
+    # 7. Create the wp-config.php file
+    cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+    
+    # 8. vim the wp-config.php file
+    vim /var/www/html/wp-config.php
+    
+    # 9. Restart Apache
+    sudo systemctl restart httpd
+
+    ```
 
 3. DNS and SSL/TLS Certificate Setup:
 
