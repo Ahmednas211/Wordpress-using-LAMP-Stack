@@ -65,14 +65,8 @@ In response to the operational challenges faced by our car rental business, we h
 4. Create a Database
 
     - Here, ensure to use the latest MYSQL engine, burstable database instance storage (check to include previous generation i.e., db.t2.micro), and pay attention to your database username and password. In subsequent configurations in ec2 server (wp-config.php): you will revert to your database configurations to get information like:
-DB name
-wordpress_Database_v1
 
-DB instance ID
-wordpress-db-1
-
-Endpoint
-wordpress-db-1.clfp8kgim5mc.eu-central-1.rds.amazonaws.com
+DB name: wordpress_Database_v1 DB instance ID: wordpress-db-1 Endpoint: wordpress-db-1.clfp8kgim5mc.eu-central-1.rds.amazonaws.com
 
  
 3. DNS and SSL/TLS Certificate Setup:
