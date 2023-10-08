@@ -204,16 +204,15 @@ Application Load Balancer:
 
 ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets and target group of our webservers. Once the ALB is finished provisioning, do the following:
   
-  •	Paste the DNS in a web browser (wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com)
-    
-  •	Add the following at the end of the DNS: wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com/wp-admin
-    
-  •	It will take you to the wordpress admin page. In the admin page,
-    
-  •	Go to settings, update the already existing IP address to the ALB DNS address: http:// wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com
-    
-  •	Then save and exit. 
-
+	  •	Paste the DNS in a web browser (wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com)
+	    
+	  •	Add the following at the end of the DNS: wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com/wp-admin
+	    
+	  •	It will take you to the wordpress admin page. In the admin page,
+	    
+	  •	Go to settings, update the already existing IP address to the ALB DNS address: http:// wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com
+	    
+	  •	Then save and exit. 
 
 9. ALB - Route 53
 
