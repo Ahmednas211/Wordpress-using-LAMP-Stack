@@ -47,11 +47,11 @@ In response to the operational challenges faced by our car rental business, we h
     - IAM Password Policies: Configure password policies to enforce strong password requirements.
    
 2. Virtual Private Cloud (VPC)
-   
+
   - Create VPCs and configure the necessary subnets. Also, configure the NAT and Internet Gateways and associate them with their respective route tables.
        
   
-3. Security Group Configuration:
+4. Security Group Configuration:
 
   - ALB Security Group: Create a Security Group for the Application Load Balancer (ALB) to allow inbound HTTP and HTTPS traffic from 0.0.0.0/0.
 
