@@ -36,13 +36,16 @@ In response to the operational challenges faced by our car rental business, we h
 
 ## **Replicating the Architecture: Deployment Steps**
 
-1. Infrastructure Setup:
+1. Identity and Access Management (IAM):
 
-    - VPC Creation: Create a Virtual Private Cloud (VPC) with public and private subnets using AWS Management Console or AWS CLI. Ensure that you carefully plan your IP addressing scheme and route tables.
+    - Create IAM Users: Create IAM users for your team members with appropriate permissions.
   
-    - Internet Connectivity: Attach an Internet Gateway to the VPC to enable communication with the internet.
+    - Implement MFA: Enforce Multi-Factor Authentication (MFA) for IAM users for enhanced security
   
-    - NAT Gateway: Set up a NAT Gateway in the public subnet to allow instances in the private subnet to access the internet securely.
+    - Define IAM Policies: Create custom IAM policies that grant necessary permissions for EC2, VPC, S3, EFS, and other resources.
+  
+    - IAM Password Policies: Configure password policies to enforce strong password requirements.
+   
       
   
 2. Security Group Configuration:
