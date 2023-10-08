@@ -1,6 +1,7 @@
 ## Optimizing Scalability and Reliability for a Car Rental WordPress Application.
 
 ## **Problem Statement**
+
 In response to the operational challenges faced by our car rental business, we have deployed a WordPress-based application on Amazon Web Services (AWS) EC2 instances. This application serves as a vital tool for optimizing the booking and management of rental vehicles. The current infrastructure utilizes a 3-tier architecture, encompassing a load balancer, Route 53 for DNS management, target groups, and various supporting resources. Despite its functionality, our application faces scalability, reliability, and performance issues. Furthermore, we are exploring the integration of Amazon Elastic File System (EFS) to elevate our data storage and sharing capabilities. In light of these challenges, we hereby request our cloud engineer to redesign our architecture, aligning it with the AWS Well-Architected Framework and its six key pillars.
 
 
