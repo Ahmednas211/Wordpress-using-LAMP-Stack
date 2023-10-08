@@ -4,7 +4,7 @@ Assuming you meant to extract a file named latest.tar.gz, you should use the fol
 
 bash
 
-tar -xzf latest.tar.gz
+sudo tar -xzf latest.tar.gz
 
 Let me break down the command for you:
 

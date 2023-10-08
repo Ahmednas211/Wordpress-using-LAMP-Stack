@@ -41,12 +41,12 @@ cp -r wordpress/* /var/www/html/
 
 
 #7. create the wp-config.php file
-cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+sudo cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
 
 
 #8. edit the wp-config.php file
-nano /var/www/html/wp-config.php
+vim /var/www/html/wp-config.php
 
 
 #9. restart the webserver
-service httpd restart
+sudo service httpd restart
