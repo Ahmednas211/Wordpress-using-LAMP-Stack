@@ -172,6 +172,7 @@ Steps
   1)	Create a webserver in private app subnet AZ 1 and use the user data. 
     
   2)	Then create another webserver in private app subnet AZ 2 and use the user data.
+
 Note: Ensure to update the mount target ID: fs-03c9b3354880b36a6.efs.us-east-1.amazonaws.com
 
   ```
