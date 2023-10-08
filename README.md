@@ -294,7 +294,7 @@ If successful, go to appearances and install desired themes.
 
     - Maintain detailed documentation of the deployment process, infrastructure architecture, and any changes made over time.
 
-## **A Screenshot of Landing Page Static Website**
+## **A Screenshot of Landing Page WordPress Website**
 
 <p align="center">
 <img src="https://i.imgur.com/MmchmkZ.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
