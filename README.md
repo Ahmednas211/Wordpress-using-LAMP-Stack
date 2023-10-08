@@ -79,15 +79,15 @@ In response to the operational challenges faced by our car rental business, we h
     
     - Select the VPC where your EC2 instances are located.
     
-  - Select the Availability Zone (AZ) for the first mount target (Private App Subnet AZ 1 & Private App Subnet AZ 2).
+    - Select the Availability Zone (AZ) for the first mount target (Private App Subnet AZ 1 & Private App Subnet AZ 2).
     
-  - Provide a Security Group that allows inbound NFS traffic from the EC2 instances.
+    - Provide a Security Group that allows inbound NFS traffic from the EC2 instances.
   
-  - Optionally, you can specify an IP address range for inbound access, or you can leave it as "0.0.0.0/0" to allow all incoming connections.
+    - Optionally, you can specify an IP address range for inbound access, or you can leave it as "0.0.0.0/0" to allow all incoming connections.
   
-  - Click the "Create mount target" button.
+    - Click the "Create mount target" button.
   
-  - Once created, click attach and copy the mount target DNS info. This will used in our ec2 setup server.
+    - Once created, click attach and copy the mount target DNS info. This will used in our ec2 setup server.
 
 
 3. DNS and SSL/TLS Certificate Setup:
