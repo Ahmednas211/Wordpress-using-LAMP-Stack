@@ -216,12 +216,15 @@ ALB Setup: Configure the Application Load Balancer (ALB) and associate it with t
 
 9. ALB - Route 53
 
-Obtain an SSL/TLS certificate using AWS Certificate Manager for your domain or subdomain to enable secure HTTPS traffic. Ensure the certificate is associated with the ALB.
+	Obtain an SSL/TLS certificate using AWS Certificate Manager for your domain or subdomain to enable secure HTTPS traffic. Ensure the certificate is associated with the ALB.
 	
   - CNAME: is the colloquial name of SSL certificate.
 
   - www.nasvibez.com is referencing our ALB in eu-central-1 region.
 
+<p align="center">
+<img src="https://i.imgur.com/PwmRhGZ.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
+</p>
   
 11. Backup and Disaster Recovery:
 
