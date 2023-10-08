@@ -225,7 +225,10 @@ ALB Setup: Configure the Application Load Balancer (ALB) and associate it with t
 <p align="center">
 <img src="https://i.imgur.com/PwmRhGZ.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
 </p>
-  
+
+Once the above step is completed:
+	• Access WordPress and update the url paths to http://www.nasvibez.com
+
 11. Backup and Disaster Recovery:
 
     - Implement backup and disaster recovery mechanisms to ensure data and application availability in case of failures.
