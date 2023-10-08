@@ -202,7 +202,7 @@ Target group
 
 Application Load Balancer: 
 
-  -ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets and target group of our webservers. Once the ALB is finished provisioning, do the following:
+  - ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets and target group of our webservers. Once the ALB is finished provisioning, do the following:
   
   •	Paste the DNS in a web browser (wordpress-lb-1257114690.eu-central-1.elb.amazonaws.com)
     
