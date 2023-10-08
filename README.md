@@ -139,7 +139,7 @@ In response to the operational challenges faced by our car rental business, we h
 
     ```
 
-7. Purpose of the Setup Server Above:
+Purpose of the Setup Server Above:
 
 The setup server serves as the core configuration hub for our AWS-hosted WordPress site. It orchestrates the installation of essential components like Apache, PHP, and MySQL for database operations. Moreover, it creates an Amazon EFS volume, enabling shared access to WordPress content among multiple EC2 instances in our chosen Availability Zones (AZ 1 and AZ 2).
 
@@ -156,10 +156,13 @@ Key Functions:
 
 7. Configure WordPress site with your information
 
-  - Prior to the configuration of WordPress, use your ec2 public IP address to direct you to the WordPress site.
+    - Prior to the configuration of WordPress, use your ec2 public IP address to direct you to the WordPress site.
 
-  - Configure WordPress with private information and make sure you access the WordPress admin page. 
+    - Configure WordPress with private information and make sure you access the WordPress admin page. 
 
+<p align="center">
+<img src="https://i.imgur.com/bHfKtvZ.png" height="65%" width="75%" alt="RDP event fail logs to iP Geographic information"/>
+</p>
 
 3. DNS and SSL/TLS Certificate Setup:
 
