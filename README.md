@@ -1,176 +1,122 @@
-Command:
+## Optimizing Scalability and Reliability for a Car Rental WordPress Application.
 
-Assuming you meant to extract a file named latest.tar.gz, you should use the following command:
+## **Problem Statement**
+In response to the operational challenges faced by our car rental business, we have deployed a WordPress-based application on Amazon Web Services (AWS) EC2 instances. This application serves as a vital tool for optimizing the booking and management of rental vehicles. The current infrastructure utilizes a 3-tier architecture, encompassing a load balancer, Route 53 for DNS management, target groups, and various supporting resources. Despite its functionality, our application faces scalability, reliability, and performance issues. Furthermore, we are exploring the integration of Amazon Elastic File System (EFS) to elevate our data storage and sharing capabilities. In light of these challenges, we hereby request our cloud engineer to redesign our architecture, aligning it with the AWS Well-Architected Framework and its six key pillars.
 
-bash
 
-sudo tar -xzf latest.tar.gz
+## **Challenges and Objectives:**
 
-Let me break down the command for you:
+    - Operational Excellence: Our primary challenge lies in ensuring the application's continuous availability, reducing downtime, and optimizing resource utilization. To achieve operational excellence, we need to enhance automation, monitoring, and incident response mechanisms.
+    - Security: As a critical aspect, security needs to be a top priority. We must bolster our application's security posture by implementing AWS Identity and Access Management (IAM) policies, encryption mechanisms, and threat detection systems.
+    - Reliability: To address the reliability issues faced by our application, we should focus on reducing single points of failure, implementing backup and recovery strategies, and enhancing the overall system's fault tolerance.
+    - Performance Efficiency: Improving the performance of our application is vital for delivering a seamless user experience. This entails optimizing resource allocation, leveraging auto-scaling capabilities, and tuning database and application configurations for maximum efficiency.
+    - Cost Optimization: Cost management is crucial to ensure the efficient use of AWS resources. By right-sizing instances, implementing cost monitoring, and adopting serverless architecture where feasible, we can achieve substantial cost savings.
+    - Scalability: To accommodate increased demand, our architecture should seamlessly scale both horizontally and vertically. Implementing auto-scaling groups and distributing traffic effectively are key aspects of achieving this scalability.
 
-    tar: This is the command to manipulate tar archives.
-    -x: Specifies that you want to extract files from the archive.
-    -z: Indicates that the archive is gzip-compressed (.tar.gz).
-    -f: Specifies the filename of the archive to be processed. In this case, it's latest.tar.gz.
 
-Remember, you need to make sure that the latest.tar.gz file is in the current directory or provide the correct path to the file in the command.
+## **Architecture Overview**
 
-usermod -aG apache ec2-user
+  - Presentation Layer: This layer serves as the interface between users and the application, functioning as the primary entry point for user interactions. To enhance reliability and performance, it's supported by an Application Load Balancer (ALB). The ALB efficiently distributes incoming traffic across multiple web server instances, ensuring consistent access to the application.
 
+  - Application Layer: This layer plays a role in hosting the web servers responsible for delivering the static components of the application. Using EC2 instances, I deploy these web servers for optimal performance and scalability. To safeguard against unexpected traffic spikes or server failures, I employ an Auto Scaling Group, which dynamically adjusts the number of EC2 instances based on demand.
+    In same vein, as our architecture presents, If you need a shared file system for multiple instances running your WordPress application, you can use Amazon EFS to store WordPress core files or plugins/themes that need to be accessed by multiple instances.
 
-The command you provided is used to add the user ec2-user to the apache group on a Linux system. It grants the user ec2-user the group permissions of the apache group.
+  - RDS is used to host the WordPress database. It provides a managed MySQL database, which makes it easier to set up, operate, and scale a relational database. This is where the WordPress content, settings, and user data are stored. Alternatively, if the need arises, we can employ Amazon Simple Storage Service (S3) to store static files securely. This adaptability ensures that the application can evolve to meet changing requirements without major architectural modifications.
 
-Here's a breakdown of the command:
+## **Architecture**
 
-    usermod: This is the command to modify user account properties.
-    -aG: The -a flag stands for "append," which means it will add the user to the specified group without removing them from any other groups. The -G flag is used to specify the group to which the user will be added.
-    apache: This is the name of the group to which ec2-user will be added.
-    ec2-user: This is the name of the user that will be added to the apache group.
+<p align="center">
+<img src="https://i.imgur.com/Z1o1RnL.png" height="50%" width="75%" alt="RDP event fail logs to iP Geographic information"/>
+</p>
 
-Please note that modifying user accounts and groups may require administrative privileges, so you might need to run this command with sudo:
+## **Replicating the Architecture: Deployment Steps**
 
-bash
+1. Infrastructure Setup:
 
-sudo usermod -aG apache ec2-user
+    - VPC Creation: Create a Virtual Private Cloud (VPC) with public and private subnets using AWS Management Console or AWS CLI. Ensure that you carefully plan your IP addressing scheme and route tables.
+  
+    - Internet Connectivity: Attach an Internet Gateway to the VPC to enable communication with the internet.
+  
+    - NAT Gateway: Set up a NAT Gateway in the public subnet to allow instances in the private subnet to access the internet securely.
+      
+  
+2. Security Group Configuration:
 
-After running this command, the user ec2-user will have the group permissions associated with the apache group, which can be useful for certain permissions and access settings, particularly in web server configurations.
-User
-Sudo chmod 2775 /var/www && find /var/www -type d -exec sudo chmod 2775 {} 
+    - ALB Security Group: Create a Security Group for the Application Load Balancer (ALB) to allow inbound HTTP and HTTPS traffic from 0.0.0.0/0.
+  
+    - Web Server Security Group: Configure a Security Group for your EC2 instances to allow inbound HTTP and HTTPS traffic from the ALB Security Group as welL SSH from "My IP".
+  
+3. DNS and SSL/TLS Certificate Setup:
 
+    - Route 53 Configuration: Create a hosted zone on Route 53 to manage the DNS records for your application. Configure DNS records like A and CNAME records as needed.
 
-The command you provided is used to set specific permissions on the /var/www directory and its subdirectories on a Linux system. Let's break down the command step by step:
+    - SSL/TLS Certificate: Obtain an SSL/TLS certificate using AWS Certificate Manager for your domain or subdomain to enable secure HTTPS traffic. Ensure the certificate is associated with the ALB.
+  
+4. Application Load Balancer (ALB):
 
-    sudo chmod 2775 /var/www:
-        sudo: It runs the command with administrative privileges (superuser/root).
-        chmod: This command is used to change file permissions.
-        2775: The number 2775 represents the permissions in octal notation. In this case, it sets the following permissions:
-            2: Set the directory SGID (Set Group ID) bit. This ensures that new files created within the directory inherit the group ownership of the parent directory.
-            7: Give read (4), write (2), and execute (1) permissions to the owner (in this case, the owner of the /var/www directory).
-            7: Give read (4), write (2), and execute (1) permissions to the group (in this case, the group apache as you mentioned in a previous command).
-            5: Give read (4) and execute (1) permissions to others (users who are not the owner or part of the group).
+    - ALB Setup: Configure the Application Load Balancer (ALB) and associate it with the ALB Security Group. Ensure it's connected to the appropriate public subnets.
 
-    find /var/www -type d -exec sudo chmod 2775 {} \;:
-        find /var/www: This command starts a search in the /var/www directory and its subdirectories.
-        -type d: This option specifies that we are looking for directories.
-        -exec sudo chmod 2775 {} \;: This tells find to execute the sudo chmod 2775 command on each directory found.
-            {} is a placeholder for each directory found by find.
-            \; marks the end of the -exec command.
+    - Listeners: Set up ALB listeners for HTTP (port 80) and HTTPS (port 443) to forward traffic to backend EC2 instances. Configure appropriate SSL policies for HTTPS.
+  
+5. Launch Template Creation:
 
-In summary, this command sets the /var/www directory to have the SGID bit set, which ensures that new files created inside the directory inherit the group ownership. It also grants read, write, and execute permissions to the owner and the group, and read and execute permissions to others for the /var/www directory. Then, it recursively sets the same permissions for all the directories within /var/www.
+    - Launch Template: Create a Launch Template specifying the required instance specifications for your EC2 instances. Include user data or user scripts for configuring instances upon launch.
 
-Keep in mind that using sudo should be done with caution, as it grants elevated privileges, and modifying system directories like /var/www may have implications on security and functionality. Ensure you understand the consequences of these permission changes before executing the command.
-User
-What is the work of wp-config.php file 
-ChatGPT
+      ```
+      #!/bin/bash
+      sudo su
+      yum update -y
+      yum install -y httpd
+      cd /var/www/html
+      wget https://github.com/Ahmednas211/jupiter-zip-file/raw/main/jupiter-main.zip
+      unzip jupiter-main.zip
+      cp -r jupiter-main/* /var/www/html
+      rm -rf jupiter-main jupiter-main.zip
+      systemctl start httpd
+      systemctl enable httpd
+      
+      ```
+  
+6. Auto Scaling Group (ASG):
 
-The wp-config.php file is a critical configuration file used in WordPress installations. It plays a significant role in setting up and connecting your WordPress website to its corresponding database and defining various essential settings. Here are the primary functions and responsibilities of the wp-config.php file:
+    - ASG Configuration: Create an Auto Scaling Group (ASG) using the Launch Template. Configure scaling policies, instance count, and health checks.
+      
+    - Target Group: Set up a Target Group and configure it as the target for the ASG. This ensures that traffic is distributed correctly among instances.
+  
+7. ALB Listener Configuration:
 
-    Database Connection: One of the most crucial roles of wp-config.php is to establish the connection between your WordPress website and its underlying MySQL or MariaDB database. It contains the necessary database credentials such as database name, username, password, and host, which WordPress needs to connect to the database and retrieve content and settings.
+    - Listener Rules: Define rules in the ALB listener to route traffic based on hostnames, paths, or other criteria. Ensure that traffic is appropriately directed to backend instances.
+  
+8. DNS Configuration:
 
-    Secret Keys and Salts: The file includes unique secret keys and salts used to encrypt sensitive information in user cookies and passwords. These keys and salts add an extra layer of security to your WordPress installation.
+    - Route 53 Updates: Update DNS records in Route 53 to point to the ALB's DNS name. Implement health checks in Route 53 to monitor the availability of your application.
 
-    Table Prefix: The wp-config.php file allows you to define a custom table prefix for your WordPress database tables. Changing the default table prefix ("wp_") can enhance security by making it harder for potential attackers to target specific database tables.
+9. Testing and Monitoring:
 
-    Debugging Settings: You can enable or disable WordPress debugging using the wp-config.php file. When debugging is enabled, it helps developers identify and troubleshoot issues by displaying error messages and warnings.
+    - Testing: After DNS records have propagated, thoroughly test your application using the domain name (HTTPS) to verify the deployment's success.
+      
+    - Monitoring: Implement cloud monitoring and logging solutions (e.g., AWS CloudWatch) to monitor the health and performance of your infrastructure and applications.
+  
+10. Backup and Disaster Recovery:
 
-    Language and Localization: The wp-config.php file lets you define the language used for your WordPress site and the location settings.
+    - Implement backup and disaster recovery mechanisms to ensure data and application availability in case of failures.
+   
+11. Security and Compliance:
 
-    Filesystem Method: It allows you to choose the method WordPress should use for handling file permissions and updates: "direct," "ssh," "ftpext," or "ftpsockets."
+    - Follow AWS security best practices, implement IAM roles and policies, and consider compliance requirements specific to your application.
+   
+12. Documentation:
 
-    WordPress Multisite: If you're setting up a WordPress Multisite (network of sites), the wp-config.php file includes configuration constants specific to Multisite installations.
+    - Maintain detailed documentation of the deployment process, infrastructure architecture, and any changes made over time.
 
-Here's an example of what the wp-config.php file might look like:
+## **A Screenshot of Landing Page Static Website**
 
-php
+<p align="center">
+<img src="https://i.imgur.com/eUP7W7a.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
+</p>
 
-<?php
-define('DB_NAME', 'database_name_here');
-define('DB_USER', 'username_here');
-define('DB_PASSWORD', 'password_here');
-define('DB_HOST', 'localhost');
+<p align="center">
+<img src="https://i.imgur.com/ZHRd67Q.png" height="75%" width="95%" alt="RDP event fail logs to iP Geographic information"/>
+</p>
 
-define('AUTH_KEY',         'put your unique phrase here');
-define('SECURE_AUTH_KEY',  'put your unique phrase here');
-define('LOGGED_IN_KEY',    'put your unique phrase here');
-define('NONCE_KEY',        'put your unique phrase here');
-define('AUTH_SALT',        'put your unique phrase here');
-define('SECURE_AUTH_SALT', 'put your unique phrase here');
-define('LOGGED_IN_SALT',   'put your unique phrase here');
-define('NONCE_SALT',       'put your unique phrase here');
-
-$table_prefix = 'wp_';
-
-define('WP_DEBUG', false);
-
-/* ... other configuration settings ... */
-
-The wp-config.php file should be kept secure because it contains sensitive information. Make sure to back it up regularly and avoid sharing it publicly or with unauthorized individuals.
-
-
-
-
-The correct command to use ssh-add with the macOS Keychain integration is as follows:
-
-bash
-
-ssh-add -K or 
-Ssh-add apple-use-keychain 
-
-The -K option is used to add the identities (private keys) to the Apple's Keychain on macOS. When you run this command, it will prompt you for the passphrase of the private key file and then add it to the Keychain.
-
-Here's how the command works:
-
-    Open the Terminal on your macOS.
-    Type ssh-add -K and press Enter.
-    If you have passphrase-protected private keys, you will be prompted to enter the passphrase for each key you want to add to the Keychain.
-
-By adding the identities to the Keychain, you can avoid entering the passphrase every time you use your private keys during an SSH session. The Keychain will automatically manage the passphrase for you while providing enhanced security for your private keys.
-User
-ssh-add —apple-use-keychain key.pem 
-
-
-This command will add the private key key.pem to the Keychain, and it will prompt you to enter the passphrase associated with that private key. Once you've entered the passphrase, the private key will be added to the Keychain, and macOS will manage the passphrase for you, so you won't have to enter it every time you use the private key during an SSH session.
-
-........................................
-ssh  -A ec2-user@Ip 
-
-
-The ssh command you provided is used to initiate an SSH connection to an Amazon EC2 instance with agent forwarding enabled. Let's break down the command:
-
-bash
-
-ssh -A ec2-user@IP
-
-    ssh: This is the command to initiate the SSH connection.
-    -A: This option enables agent forwarding. Agent forwarding allows you to use your local SSH key on the remote server to access other systems or resources that require your public key for authentication. It allows you to jump from the EC2 instance to other SSH-enabled systems without storing your private key on the EC2 instance itself.
-    ec2-user: This is the username used to log in to the EC2 instance. The specific username may vary depending on the AMI (Amazon Machine Image) you are using. For Amazon Linux and Amazon Linux 2 AMIs, the default username is typically ec2-user.
-    IP: This is the public IP address or hostname of your EC2 instance. Replace "IP" with the actual public IP address or hostname of your instance.
-
-To establish the SSH connection, open a terminal or command prompt on your local machine and enter the command, replacing IP with the actual public IP address or hostname of your EC2 instance. If your SSH key is correctly configured and you have the necessary permissions, the connection will be established, and you'll be logged in to the EC2 instance as the specified user (ec2-user in this case).
-
-
-/* SSL Settings */
-define('FORCE_SSL_ADMIN', true);
-
-// Get true SSL status from AWS load balancer
-if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
-  $_SERVER['HTTPS'] = '1';
-}
-
-
-The code you provided above is related to SSL (Secure Sockets Layer) settings for a WordPress site running on an Amazon Web Services (AWS) Elastic Load Balancer (ELB) or proxy server. Let's break down the code and its purpose:
-
-    define('FORCE_SSL_ADMIN', true);:
-    This line sets the FORCE_SSL_ADMIN constant to true. In WordPress, when this constant is set to true, it forces all administration and login pages to use SSL. It ensures that the WordPress dashboard and login credentials are transmitted over an encrypted HTTPS connection, adding an extra layer of security.
-
-    SSL Termination using AWS ELB or Proxy Server:
-    The code block starting with if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) ... checks for a specific header in the HTTP request, indicating whether the original request came via HTTPS (secure) or HTTP (non-secure). When using an AWS Elastic Load Balancer (ELB) or a proxy server, the ELB or proxy forwards the original client request to the web server. However, it also adds an X-Forwarded-Proto header to the request, indicating whether the original request was secure (HTTPS) or not (HTTP).
-        $_SERVER['HTTP_X_FORWARDED_PROTO']: This accesses the value of the X-Forwarded-Proto header in the HTTP request, if it exists.
-        === 'https': This checks if the value of the X-Forwarded-Proto header is equal to 'https', which means the original request was made via HTTPS.
-        If the condition is true (meaning the original request was secure via HTTPS), the code sets $_SERVER['HTTPS'] to '1'. This tricks WordPress into thinking that the current request is over HTTPS, ensuring that WordPress generates secure URLs and content links.
-
-    Essentially, this code snippet ensures that WordPress behaves correctly when behind a proxy (like AWS ELB) that handles SSL termination and forwards requests to the web server over HTTP.
-
-By combining the two parts, you ensure that all administration and login pages of your WordPress site use SSL and that WordPress generates correct URLs and content links even when accessed via a proxy like AWS ELB that handles SSL termination.
-
-Please note that the effectiveness of this code depends on your specific server setup and configuration, so always test thoroughly after making such changes to ensure everything works as expected.
+**Congratulations! You've Successfuly Hosted a Static Jupiter Website :)**
