@@ -145,13 +145,14 @@ The setup server serves as the core configuration hub for our AWS-hosted WordPre
 
 Key Functions:
 
-  - Installs and configures Apache, PHP, and MySQL for seamless WordPress operation.
-    
-  - Manages database connections and updates configurations in wp-config.php.
-    
-  - Establishes an Amazon EFS volume mounted on the HTML directory of web servers.
-    
-  - Facilitates content sharing across EC2 instances in AZ 1 and AZ 2, mirroring the setup of Web Server 1 and Web Server 2. This design ensures high availability and scalability for our WordPress site.
+    - Installs and configures Apache, PHP, and MySQL for seamless WordPress operation.
+      
+    - Manages database connections and updates configurations in wp-config.php.
+      
+    - Establishes an Amazon EFS volume mounted on the HTML directory of web servers.
+      
+    - Facilitates content sharing across EC2 instances in AZ 1 and AZ 2, mirroring the setup of Web Server 1 and Web Server 2. This design ensures high availability and scalability for our WordPress site.
+
 
 7. Configure WordPress site with your information
 
