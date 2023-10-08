@@ -75,9 +75,9 @@ In response to the operational challenges faced by our car rental business, we h
 
 5. Create an EFS and Mount Target
 
-  - Create an EFS and customize it, then configure the mount target;
+    - Create an EFS and customize it, then configure the mount target;
     
-  - Select the VPC where your EC2 instances are located.
+    - Select the VPC where your EC2 instances are located.
     
   - Select the Availability Zone (AZ) for the first mount target (Private App Subnet AZ 1 & Private App Subnet AZ 2).
     
