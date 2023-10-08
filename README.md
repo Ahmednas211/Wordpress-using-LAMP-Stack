@@ -52,7 +52,7 @@ In response to the operational challenges faced by our car rental business, we h
     - Create VPCs and configure the necessary subnets. Also, configure the NAT and Internet Gateways and associate them with their respective route tables.
        
   
-4. Security Group Configuration:
+3. Security Group Configuration:
 
     - ALB Security Group: Create a Security Group for the Application Load Balancer (ALB) to allow inbound HTTP and HTTPS traffic from 0.0.0.0/0.
 
@@ -62,7 +62,19 @@ In response to the operational challenges faced by our car rental business, we h
 
     - Elastic File System Security Group: Allow inbound traffic of NFS protocol on port 2049 from webserver security group and EFS security group (tip: ensure to create your security first, then go back to the SG and attach the EFS SG). Finally, add SSH from SSH SG.
 
-  
+4. Create a Database
+
+    - Here, ensure to use the latest MYSQL engine, burstable database instance storage (check to include previous generation i.e., db.t2.micro), and pay attention to your database username and password. In subsequent configurations in ec2 server (wp-config.php): you will revert to your database configurations to get information like:
+DB name
+wordpress_Database_v1
+
+DB instance ID
+wordpress-db-1
+
+Endpoint
+wordpress-db-1.clfp8kgim5mc.eu-central-1.rds.amazonaws.com
+
+ 
 3. DNS and SSL/TLS Certificate Setup:
 
     - Route 53 Configuration: Create a hosted zone on Route 53 to manage the DNS records for your application. Configure DNS records like A and CNAME records as needed.
