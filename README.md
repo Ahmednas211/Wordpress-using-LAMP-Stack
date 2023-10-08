@@ -51,11 +51,16 @@ In response to the operational challenges faced by our car rental business, we h
   - Create VPCs and configure the necessary subnets. Also, configure the NAT and Internet Gateways and associate them with their respective route tables.
        
   
-2. Security Group Configuration:
+3. Security Group Configuration:
 
-    - ALB Security Group: Create a Security Group for the Application Load Balancer (ALB) to allow inbound HTTP and HTTPS traffic from 0.0.0.0/0.
-  
-    - Web Server Security Group: Configure a Security Group for your EC2 instances to allow inbound HTTP and HTTPS traffic from the ALB Security Group as welL SSH from "My IP".
+  - ALB Security Group: Create a Security Group for the Application Load Balancer (ALB) to allow inbound HTTP and HTTPS traffic from 0.0.0.0/0.
+
+  - Web Server Security Group: Configure a Security Group for your EC2 instances to allow inbound HTTP and HTTPS traffic from the ALB Security Group as well as SSH from "My IP".
+
+  - Database Security Group: Allow inbound traffic for MYSQL/Aurora on port 3306 from the webserver security group.
+
+  - Elastic File System Security Group: Allow inbound traffic of NFS protocol on port 2049 from webserver security group and EFS security group (tip: ensure to create your security first, then go back to the SG and attach the EFS SG). Finally, add SSH from SSH SG.
+
   
 3. DNS and SSL/TLS Certificate Setup:
 
