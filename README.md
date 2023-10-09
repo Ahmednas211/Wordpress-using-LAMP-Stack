@@ -32,7 +32,7 @@ In response to the operational challenges faced by our car rental business, we h
 ## **Architecture**
 
 <p align="center">
-<img src="https://i.imgur.com/7b8RQNO.png" height="65%" width="75%" alt="RDP event fail logs to iP Geographic information"/>
+<img src="https://i.imgur.com/7b8RQNO.png" height="95%" width="100%" alt="RDP event fail logs to iP Geographic information"/>
 </p>
 
 ## **Replicating the Architecture: Deployment Steps**
